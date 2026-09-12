@@ -183,7 +183,7 @@ the trigger is held.
         .duration = 0x3fff, // must be finite for the envelope to restart when stopping/playing
         .button_mask = 0x00,
         .direction = 0,
-        .gain = 0x7f,
+        .gain = 0,
         .sample_rate = 100,
         .attack_level = 0x7f,
         .sustain_level = 0x28,
