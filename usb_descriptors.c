@@ -26,7 +26,6 @@
 #include "tusb.h"
 
 #include "usb_descriptors.h"
-#include "bsp/board_api.h"
 
 #include "usb_report_ids.h"
 
