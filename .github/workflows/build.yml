@@ -37,6 +37,18 @@ jobs:
           echo "add_compile_definitions(HID_USAGE_PID_BLOCK_LOAD_FULL=0x9D)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_BLOCK_LOAD_SUCCESS=0x9C)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_OFFSET=0x7C)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_STATUS=0x9C)" >> CMakeLists.txt
+          
+          # Map remaining legacy descriptor terms directly to their hardware equivalents
+          echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_FREE_REPORT=0x9A)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_REPORT=0x9B)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_POOL_ALIGNMENT=0xAB)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_MOVE_EFFECT_REPORT=0x92)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_DEVICE_CONTROL=0x96)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_CREATE_NEW_EFFECT_PARAM_BLOCK_REPORT=0xab)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_SET_CONSTANT_FORCE_REPORT=0x73)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_SET_RAMP_FORCE_REPORT=0x74)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_CENTER_POINT_OFFSET=0x60)" >> CMakeLists.txt
           
           # Force the legacy macro definition to use quotes to shield the parentheses from the shell
           echo 'add_compile_definitions("UART_FUNCSEL_NUM(u,p)=GPIO_FUNC_UART")' >> CMakeLists.txt
