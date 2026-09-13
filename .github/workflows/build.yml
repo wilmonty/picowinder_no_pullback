@@ -51,7 +51,7 @@ jobs:
           
           # Complete Effect Operation Block Map
           echo "add_compile_definitions(HID_USAGE_PID_EFFECT_OPERATION=0x6E)" >> CMakeLists.txt
-          echo "add_compile_definitions(HID_USAGE_PID_LOOP_COUNT=0x7C)" >> >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_LOOP_COUNT=0x7C)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_EFFECT_OPERATION_REPORT=0x7A)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_OP_EFFECT_START=0x77)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_OP_EFFECT_START_SOLO=0x78)" >> CMakeLists.txt
