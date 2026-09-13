@@ -16,6 +16,8 @@ jobs:
         run: |
           DECODED_URL=$(echo "aHR0cHM6Ly9naXRodWIuY29tL3Jhc3BiZXJyeXBpL3BpY28tc2RrLmdpdA==" | base64 --decode)
           git clone --depth 1 -b 1.5.1 "$DECODED_URL" target_sdk
+          cd target_sdk
+          git submodule update --init --recursive lib/tinyusb
           echo "PICO_SDK_PATH=${{ github.workspace }}/target_sdk" >> $GITHUB_ENV
 
       - name: Force Disable Picotool
