@@ -41,9 +41,10 @@ jobs:
           #define HID_USAGE_PID_EFFECT_PARAM_BLOCK_FREE_REPORT   HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_FREE_REPORT
           #define HID_USAGE_CREATE_NEW_EFFECT_PARAM_BLOCK_REPORT HID_USAGE_PID_CREATE_NEW_EFFECT_PARAMETER_BLOCK_REPORT
           
-          // Force report translations (Only mapping the two that actually changed in modern TinyUSB)
+          // Force report translations
           #define HID_USAGE_PID_SET_CONSTANT_FORCE_REPORT        HID_USAGE_PID_SET_CONSTANTFORCE_REPORT
           #define HID_USAGE_PID_SET_RAMP_FORCE_REPORT            HID_USAGE_PID_SET_RAMPFORCE_REPORT
+          #define HID_USAGE_PID_CENTER_POINT_OFFSET              HID_USAGE_PID_CENTERPOINT_OFFSET
           
           #endif
           EOF
