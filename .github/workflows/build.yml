@@ -47,6 +47,7 @@ jobs:
           echo "add_compile_definitions(HID_USAGE_PID_SIMULTANEOUS_EFFECTS_MAX=0x86)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_RAM_POOL_AVAILABLE=0xAC)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_BLOCK_LOAD_ERROR=0x9E)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_BLOCK_LOAD_FULL=0x9D)" >> CMakeLists.txt
           
           # Force the legacy macro definition to use quotes to shield the parentheses from the shell
           echo 'add_compile_definitions("UART_FUNCSEL_NUM(u,p)=GPIO_FUNC_UART")' >> CMakeLists.txt
