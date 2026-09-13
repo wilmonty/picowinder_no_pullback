@@ -20,22 +20,19 @@ jobs:
           git submodule update --init --recursive lib/tinyusb
           echo "PICO_SDK_PATH=${{ github.workspace }}/target_sdk" >> $GITHUB_ENV
 
-      - name: Inject Configuration Fixes
+      - name: Inject Global Naming Compatibility Patches
         run: |
-          # Completely clear the bad local hid_pid.h file right now before CMake runs
+          # Clear out the old file token conflict natively
           rm -f hid_pid.h
           touch hid_pid.h
           
-          # Force global settings and link the missing bsp include directories directly to the build file
+          # Force global bypass flags and explicitly append the missing TinyUSB BSP paths to CMake
           echo "set(DISABLE_PICOTOOL ON)" >> CMakeLists.txt
           echo "set(PICO_NO_PICOTOOL ON)" >> CMakeLists.txt
           echo "include_directories(\${PICO_SDK_PATH}/lib/tinyusb/hw/bsp)" >> CMakeLists.txt
           echo "include_directories(\${PICO_SDK_PATH}/lib/tinyusb/hw/bsp/rp2040)" >> CMakeLists.txt
           
-          # Inject the missing UART macro definition explicitly to solve the main.c warning
-          echo "add_compile_definitions(UART_FUNCSEL_NUM=GPIO_FUNC_UART)" >> CMakeLists.txt
-          
-          # Map all the modern TinyUSB layout naming tokens cleanly
+          # Inject all translation macros straight into the compiler environment
           echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_STATUS=HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_STATUS)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_PARAM_BLOCK_POOLS_REPORT=HID_USAGE_PID_PARAMETER_BLOCK_POOLS_REPORT)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_DEVICE_MANAGED_POOL=HID_USAGE_PID_DEVICEMANAGED_POOL)" >> CMakeLists.txt
