@@ -1,35 +1,67 @@
-name: Build Firmware
-on: [push, workflow_dispatch]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Fetch Submodules Manually
-        run: |
-          git submodule init
-          git submodule update --init --recursive
-
-      - name: Install Compiler
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc-arm-none-eabi cmake ninja-build
-
-      - name: Force Disable Picotool
-        run: |
-          echo "set(DISABLE_PICOTOOL ON)" >> CMakeLists.txt
-          echo "set(PICO_NO_PICOTOOL ON)" >> CMakeLists.txt
-
-      - name: Compile
-        run: |
-          mkdir build && cd build
-          cmake -G "Ninja" -DPICO_SDK_FETCH_FROM_GIT=on ..
-          ninja
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: picowinder-clean
-          path: build/*.uf2
+ner/work/picowinder_no_pullback/picowinder_no_pullback/hid_pid.h:111:5: error: redeclaration of enumerator 'HID_USAGE_PID_DC_CONTINUE'
+  111 |     HID_USAGE_PID_DC_CONTINUE                   = 0x9c,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/build/_deps/pico_sdk-src/lib/tinyusb/src/class/hid/hid.h:1048:3: note: previous definition of 'HID_USAGE_PID_DC_CONTINUE' with type 'enum <anonymous>'
+ 1048 |   HID_USAGE_PID_DC_CONTINUE                              = 0x9c,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/hid_pid.h:113:5: error: redeclaration of enumerator 'HID_USAGE_PID_DEVICE_PAUSED'
+  113 |     HID_USAGE_PID_DEVICE_PAUSED                 = 0x9f,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/build/_deps/pico_sdk-src/lib/tinyusb/src/class/hid/hid.h:1049:3: note: previous definition of 'HID_USAGE_PID_DEVICE_PAUSED' with type 'enum <anonymous>'
+ 1049 |   HID_USAGE_PID_DEVICE_PAUSED                            = 0x9f,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/hid_pid.h:114:5: error: redeclaration of enumerator 'HID_USAGE_PID_ACTUATORS_ENABLED'
+  114 |     HID_USAGE_PID_ACTUATORS_ENABLED             = 0xa0,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/build/_deps/pico_sdk-src/lib/tinyusb/src/class/hid/hid.h:1050:3: note: previous definition of 'HID_USAGE_PID_ACTUATORS_ENABLED' with type 'enum <anonymous>'
+ 1050 |   HID_USAGE_PID_ACTUATORS_ENABLED                        = 0xa0,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/hid_pid.h:115:5: error: redeclaration of enumerator 'HID_USAGE_PID_SAFETY_SWITCH'
+  115 |     HID_USAGE_PID_SAFETY_SWITCH                 = 0xa4,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/build/_deps/pico_sdk-src/lib/tinyusb/src/class/hid/hid.h:1051:3: note: previous definition of 'HID_USAGE_PID_SAFETY_SWITCH' with type 'enum <anonymous>'
+ 1051 |   HID_USAGE_PID_SAFETY_SWITCH                            = 0xa4,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/hid_pid.h:116:5: error: redeclaration of enumerator 'HID_USAGE_PID_ACTUATOR_OVERRIDE_SWITCH'
+  116 |     HID_USAGE_PID_ACTUATOR_OVERRIDE_SWITCH      = 0xa5,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/build/_deps/pico_sdk-src/lib/tinyusb/src/class/hid/hid.h:1052:3: note: previous definition of 'HID_USAGE_PID_ACTUATOR_OVERRIDE_SWITCH' with type 'enum <anonymous>'
+ 1052 |   HID_USAGE_PID_ACTUATOR_OVERRIDE_SWITCH                 = 0xa5,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/hid_pid.h:117:5: error: redeclaration of enumerator 'HID_USAGE_PID_ACTUATOR_POWER'
+  117 |     HID_USAGE_PID_ACTUATOR_POWER                = 0xa6,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/build/_deps/pico_sdk-src/lib/tinyusb/src/class/hid/hid.h:1053:3: note: previous definition of 'HID_USAGE_PID_ACTUATOR_POWER' with type 'enum <anonymous>'
+ 1053 |   HID_USAGE_PID_ACTUATOR_POWER                           = 0xa6,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/hid_pid.h:118:5: error: redeclaration of enumerator 'HID_USAGE_PID_START_DELAY'
+  118 |     HID_USAGE_PID_START_DELAY                   = 0xa7,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/build/_deps/pico_sdk-src/lib/tinyusb/src/class/hid/hid.h:1054:3: note: previous definition of 'HID_USAGE_PID_START_DELAY' with type 'enum <anonymous>'
+ 1054 |   HID_USAGE_PID_START_DELAY                              = 0xa7,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/hid_pid.h:120:5: error: redeclaration of enumerator 'HID_USAGE_PID_PARAMETER_BLOCK_SIZE'
+  120 |     HID_USAGE_PID_PARAMETER_BLOCK_SIZE          = 0xa8,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/build/_deps/pico_sdk-src/lib/tinyusb/src/class/hid/hid.h:1055:3: note: previous definition of 'HID_USAGE_PID_PARAMETER_BLOCK_SIZE' with type 'enum <anonymous>'
+ 1055 |   HID_USAGE_PID_PARAMETER_BLOCK_SIZE                     = 0xa8,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/hid_pid.h:122:5: error: redeclaration of enumerator 'HID_USAGE_PID_SHARED_PARAMETER_BLOCKS'
+  122 |     HID_USAGE_PID_SHARED_PARAMETER_BLOCKS       = 0xaa,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/build/_deps/pico_sdk-src/lib/tinyusb/src/class/hid/hid.h:1057:3: note: previous definition of 'HID_USAGE_PID_SHARED_PARAMETER_BLOCKS' with type 'enum <anonymous>'
+ 1057 |   HID_USAGE_PID_SHARED_PARAMETER_BLOCKS                  = 0xaa,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/hid_pid.h:125:5: error: redeclaration of enumerator 'HID_USAGE_PID_RAM_POOL_AVAILABLE'
+  125 |     HID_USAGE_PID_RAM_POOL_AVAILABLE                = 0xac,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/build/_deps/pico_sdk-src/lib/tinyusb/src/class/hid/hid.h:1059:3: note: previous definition of 'HID_USAGE_PID_RAM_POOL_AVAILABLE' with type 'enum <anonymous>'
+ 1059 |   HID_USAGE_PID_RAM_POOL_AVAILABLE                       = 0xac,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[28/115] Building C object CMakeFiles/picowinder.dir/_deps/pico_sdk-src/src/rp2040/pico_platform/platform.c.o
+[29/115] Building C object CMakeFiles/picowinder.dir/usb.c.o
+[30/115] Building C object CMakeFiles/picowinder.dir/main.c.o
+[31/115] Building C object CMakeFiles/picowinder.dir/_deps/pico_sdk-src/src/rp2_common/hardware_gpio/gpio.c.o
+[32/115] Building C object CMakeFiles/picowinder.dir/ffb_midi.c.o
+ninja: build stopped: subcommand failed.
+Error: Process completed with exit code 1.
