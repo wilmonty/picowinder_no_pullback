@@ -39,7 +39,8 @@ jobs:
           echo "add_compile_definitions(HID_USAGE_PID_SET_RAMP_FORCE_REPORT=HID_USAGE_PID_SET_RAMPFORCE_REPORT)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_CENTER_POINT_OFFSET=HID_USAGE_PID_CENTERPOINT_OFFSET)" >> CMakeLists.txt
           
-          # Hard hex number bypass for the layout targets that crashed earlier runs
+          # Direct hardware hex number overrides to completely stop library naming errors
+          echo "add_compile_definitions(HID_USAGE_PID_PARAM_BLOCK_POOLS_REPORT=0xA7)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_DEVICE_MANAGED_POOL=0xA9)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_SHARED_PARAMETER_BLOCKS=0xAA)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_RAM_POOL_SIZE=0xA8)" >> CMakeLists.txt
