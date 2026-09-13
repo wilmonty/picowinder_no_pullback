@@ -44,6 +44,8 @@ jobs:
           # Complete Periodic Block Overrides
           echo "add_compile_definitions(HID_USAGE_PID_PERIOD=0x70)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_MAGNITUDE=0x71)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_PHASE=0x72)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_OFFSET=0x73)" >> CMakeLists.txt
           
           # Complete Ramp Force Overrides
           echo "add_compile_definitions(HID_USAGE_PID_RAMP_START=0x75)" >> CMakeLists.txt
