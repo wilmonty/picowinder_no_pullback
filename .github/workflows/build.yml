@@ -44,6 +44,11 @@ jobs:
           # Output Report Header Overrides
           echo "add_compile_definitions(HID_USAGE_PID_SET_PERIODIC_REPORT=0x71)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_SET_CONDITION_REPORT=0x72)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_SET_ENVELOPE_REPORT=0x75)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_SET_EFFECT_REPORT=0x73)" >> CMakeLists.txt
+          
+          # Complete Condition Block Overrides
+          echo "add_compile_definitions(HID_USAGE_PID_DEAD_BAND=0x65)" >> CMakeLists.txt
           
           # Complete Periodic Block Overrides
           echo "add_compile_definitions(HID_USAGE_PID_PERIOD=0x70)" >> CMakeLists.txt
