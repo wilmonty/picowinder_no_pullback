@@ -41,6 +41,10 @@ jobs:
           echo "add_compile_definitions(HID_USAGE_PID_DEVICE_GAIN=0x7F)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_DEVICE_GAIN_REPORT=0x7E)" >> CMakeLists.txt
           
+          # Output Report Header Overrides
+          echo "add_compile_definitions(HID_USAGE_PID_SET_PERIODIC_REPORT=0x71)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_SET_CONDITION_REPORT=0x72)" >> CMakeLists.txt
+          
           # Complete Periodic Block Overrides
           echo "add_compile_definitions(HID_USAGE_PID_PERIOD=0x70)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_MAGNITUDE=0x71)" >> CMakeLists.txt
