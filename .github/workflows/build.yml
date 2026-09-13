@@ -45,6 +45,7 @@ jobs:
           echo "add_compile_definitions(HID_USAGE_PID_DC_CONTINUE=0x9C)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_DC_PAUSE=0x9B)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_DC_STOP=0x9A)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_DC_STOP_ALL_EFFECTS=0x9A)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_DC_RESET=0x9E)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_DEVICE_PAUSED=0x9F)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_ACTUATORS_ENABLED=0xA0)" >> CMakeLists.txt
