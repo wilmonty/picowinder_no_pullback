@@ -21,11 +21,12 @@ jobs:
         run: |
           echo "set(DISABLE_PICOTOOL ON)" >> CMakeLists.txt
           echo "set(PICO_NO_PICOTOOL ON)" >> CMakeLists.txt
+          echo "set(PICO_SDK_FETCH_FROM_GIT_TAG 1.5.1)" >> CMakeLists.txt
 
       - name: Compile
         run: |
           mkdir build && cd build
-          cmake -G "Ninja" -DPICO_SDK_FETCH_FROM_GIT=on -DPICO_SDK_FETCH_FROM_GIT_TAG=1.5.1 ..
+          cmake -G "Ninja" -DPICO_SDK_FETCH_FROM_GIT=on ..
           ninja
 
       - name: Upload Artifact
