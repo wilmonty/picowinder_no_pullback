@@ -22,30 +22,31 @@ jobs:
           echo "set(DISABLE_PICOTOOL ON)" >> CMakeLists.txt
           echo "set(PICO_NO_PICOTOOL ON)" >> CMakeLists.txt
 
-      - name: Apply TinyUSB Naming Patch
+      - name: Apply Comprehensive TinyUSB Patch
         run: |
           rm -f hid_pid.h
-          echo "#ifndef HID_PID_PATCH_H" > hid_pid.h
-          echo "#define HID_PID_PATCH_H" >> hid_pid.h
-          echo "#include \"class/hid/hid.h\"" >> hid_pid.h
-          echo "#define HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_STATUS HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_STATUS" >> hid_pid.h
-          echo "#define HID_USAGE_PID_PARAM_BLOCK_POOLS_REPORT HID_USAGE_PID_PARAMETER_BLOCK_POOLS_REPORT" >> hid_pid.h
-          echo "#define HID_USAGE_PID_DEVICE_MANAGED_POOL HID_USAGE_PID_DEVICEMANAGED_POOL" >> hid_pid.h
-          echo "#define HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_REPORT HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_REPORT" >> hid_pid.h
-          echo "#define HID_USAGE_CREATE_NEW_EFFECT_PARAM_BLOCK_REPORT HID_USAGE_CREATE_NEW_EFFECT_PARAMETER_BLOCK_REPORT" >> hid_pid.h
-          echo "#endif" >> hid_pid.h
+          cat << 'EOF' > hid_pid.h
+          #ifndef HID_PID_PATCH_H
+          #define HID_PID_PATCH_H
+          #include "class/hid/hid.h"
+          
+          // Map all older short parameter names to modern TinyUSB long names
+          #define HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_STATUS HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_STATUS
+          #define HID_USAGE_PID_PARAM_BLOCK_POOLS_REPORT HID_USAGE_PID_PARAMETER_BLOCK_POOLS_REPORT
+          #define HID_USAGE_PID_DEVICE_MANAGED_POOL HID_USAGE_PID_DEVICEMANAGED_POOL
+          #define HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_REPORT HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_REPORT
+          #define HID_USAGE_CREATE_NEW_EFFECT_PARAM_BLOCK_REPORT HID_USAGE_CREATE_NEW_EFFECT_PARAMETER_BLOCK_REPORT
+          #define HID_USAGE_PID_POOL_ALIGNMENT HID_USAGE_PID_PARAMETER_BLOCK_POOL_ALIGNMENT
+          #define HID_USAGE_PID_MOVE_EFFECT_REPORT HID_USAGE_PID_MOVE_EFFECT
+          
+          #endif
+          EOF
 
       - name: Compile
         run: |
           mkdir build && cd build
           cmake -G "Ninja" -DPICO_SDK_FETCH_FROM_GIT=on ..
           ninja
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: picowinder-clean
-          path: build/*.uf2
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
