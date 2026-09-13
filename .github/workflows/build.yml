@@ -4,20 +4,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Joystick Code
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - name: Install ARM Toolchain
+      - name: Install Compiler
         run: |
           sudo apt-get update
           sudo apt-get install -y gcc-arm-none-eabi cmake ninja-build
 
-      - name: Automatic SDK Deployment
-        uses: raspberrypi/setup-pico-sdk@v1
-        with:
-          version: '1.5.1'
+      - name: Fetch Fixed SDK Environment
+        run: |
+          git clone --depth 1 -b 1.5.1 https://github.com sdk_source
+          echo "PICO_SDK_PATH=${{ github.workspace }}/sdk_source" >> $GITHUB_ENV
 
       - name: Compile Custom Binary
         run: |
@@ -25,7 +25,7 @@ jobs:
           cmake -G "Ninja" -DDISABLE_PICOTOOL=ON ..
           ninja
 
-      - name: Upload Clean Firmware
+      - name: Upload Finished Firmware
         uses: actions/upload-artifact@v4
         with:
           name: picowinder-clean
