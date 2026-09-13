@@ -4,23 +4,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout Joystick Code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-      - name: Install Original Toolchain
+      - name: Install ARM Toolchain
         run: |
           sudo apt-get update
           sudo apt-get install -y gcc-arm-none-eabi cmake ninja-build
 
-      - name: Clone Original SDK 1.5.1
-        run: |
-          git clone --depth 1 --branch 1.5.1 https://github.com ${{ github.workspace }}/pico-sdk
-          cd ${{ github.workspace }}/pico-sdk
-          git submodule update --init --recursive lib/tinyusb
+      - name: Automatic SDK Deployment
+        uses: raspberrypi/setup-pico-sdk@v1
+        with:
+          version: '1.5.1'
 
-      - name: Compile Custom Firmware
-        env:
-          PICO_SDK_PATH: ${{ github.workspace }}/pico-sdk
+      - name: Compile Custom Binary
         run: |
           mkdir build && cd build
           cmake -G "Ninja" -DDISABLE_PICOTOOL=ON ..
