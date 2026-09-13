@@ -40,7 +40,13 @@ jobs:
           echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_STATUS=0x9C)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_DEVICE_GAIN=0x7F)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_DEVICE_GAIN_REPORT=0x7E)" >> CMakeLists.txt
+          
+          # Complete Effect Operation Block Map
           echo "add_compile_definitions(HID_USAGE_PID_LOOP_COUNT=0x7C)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_EFFECT_OPERATION_REPORT=0x7A)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_OP_EFFECT_START=0x77)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_OP_EFFECT_START_SOLO=0x78)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_OP_EFFECT_STOP=0x79)" >> CMakeLists.txt
           
           # Complete Device Control block map mapping every hardware state variation
           echo "add_compile_definitions(HID_USAGE_PID_DC_CONTINUE=0x9C)" >> CMakeLists.txt
