@@ -20,17 +20,11 @@ jobs:
           git submodule update --init --recursive lib/tinyusb
           echo "PICO_SDK_PATH=${{ github.workspace }}/target_sdk" >> $GITHUB_ENV
 
-      - name: Inject Configuration Fixes
+      - name: Inject Global Naming Compatibility Patches
         run: |
-          rm -f hid_pid.h
-          touch hid_pid.h
-          
-          # Fix the source-level build variables right at the top of the file
-          sed -i '1i set(DISABLE_PICOTOOL ON)\nset(PICO_NO_PICOTOOL ON)' CMakeLists.txt
-          
-          # Explicitly bind the missing TinyUSB board folders directly onto the executable target layout
-          echo "target_include_directories(picowinder PRIVATE \${PICO_SDK_PATH}/lib/tinyusb/hw/bsp)" >> CMakeLists.txt
-          echo "target_include_directories(picowinder PRIVATE \${PICO_SDK_PATH}/lib/tinyusb/hw/bsp/rp2040)" >> CMakeLists.txt
+          # Force global bypass flags right into the compiler template configurations
+          echo "set(DISABLE_PICOTOOL ON)" >> CMakeLists.txt
+          echo "set(PICO_NO_PICOTOOL ON)" >> CMakeLists.txt
           
           # Map all the modern TinyUSB layout naming tokens cleanly
           echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_STATUS=HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_STATUS)" >> CMakeLists.txt
@@ -46,6 +40,9 @@ jobs:
           echo "add_compile_definitions(HID_USAGE_PID_SET_CONSTANT_FORCE_REPORT=HID_USAGE_PID_SET_CONSTANTFORCE_REPORT)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_SET_RAMP_FORCE_REPORT=HID_USAGE_PID_SET_RAMPFORCE_REPORT)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_CENTER_POINT_OFFSET=HID_USAGE_PID_CENTERPOINT_OFFSET)" >> CMakeLists.txt
+          
+          # Force the legacy macro definition to use the modern SDK's function definition
+          echo "add_compile_definitions(UART_FUNCSEL_NUM(u,p)=GPIO_FUNC_UART)" >> CMakeLists.txt
 
       - name: Compile
         run: |
