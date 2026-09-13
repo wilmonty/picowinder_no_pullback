@@ -49,6 +49,10 @@ jobs:
           
           # Complete Condition Block Overrides
           echo "add_compile_definitions(HID_USAGE_PID_DEAD_BAND=0x65)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_POSITIVE_SATURATION=0x62)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_NEGATIVE_SATURATION=0x63)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_POSITIVE_COEFFICIENT=0x60)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_NEGATIVE_COEFFICIENT=0x61)" >> CMakeLists.txt
           
           # Complete Periodic Block Overrides
           echo "add_compile_definitions(HID_USAGE_PID_PERIOD=0x70)" >> CMakeLists.txt
