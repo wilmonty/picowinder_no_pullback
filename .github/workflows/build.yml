@@ -41,8 +41,8 @@ jobs:
           echo "add_compile_definitions(HID_USAGE_PID_SET_RAMP_FORCE_REPORT=HID_USAGE_PID_SET_RAMPFORCE_REPORT)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_CENTER_POINT_OFFSET=HID_USAGE_PID_CENTERPOINT_OFFSET)" >> CMakeLists.txt
           
-          # Force the legacy macro definition to use the modern SDK's function definition
-          echo "add_compile_definitions(UART_FUNCSEL_NUM(u,p)=GPIO_FUNC_UART)" >> CMakeLists.txt
+          # Force the legacy macro definition to use quotes to shield the parentheses from the shell
+          echo 'add_compile_definitions("UART_FUNCSEL_NUM(u,p)=GPIO_FUNC_UART")' >> CMakeLists.txt
 
       - name: Compile
         run: |
