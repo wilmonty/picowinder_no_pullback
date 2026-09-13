@@ -9,20 +9,20 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install Compiler
+      - name: Install Compilers and SDK
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-arm-none-eabi cmake ninja-build
+          sudo apt-get install -y gcc-arm-none-eabi cmake ninja-build python3
 
-      - name: Fetch Fixed SDK Environment
+      - name: Fetch SDK via Submodule
         run: |
-          git clone --depth 1 -b 1.5.1 https://github.com sdk_source
-          echo "PICO_SDK_PATH=${{ github.workspace }}/sdk_source" >> $GITHUB_ENV
+          git clone --depth 1 -b 1.5.1 https://github.com sdk_source || true
+          echo "PICO_SDK_PATH=${{ github.workspace }}/build/_deps/pico_sdk-src" >> $GITHUB_ENV
 
       - name: Compile Custom Binary
         run: |
           mkdir build && cd build
-          cmake -G "Ninja" -DDISABLE_PICOTOOL=ON ..
+          cmake -G "Ninja" -DPICO_SDK_FETCH_FROM_GIT=on -DDISABLE_PICOTOOL=ON ..
           ninja
 
       - name: Upload Finished Firmware
