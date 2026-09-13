@@ -1,48 +1,63 @@
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/usb_descriptors.h:694:15: note: in expansion of macro 'HID_USAGE_PID_PARAM_BLOCK_POOLS_REPORT'
-  694 |     HID_USAGE(HID_USAGE_PID_PARAM_BLOCK_POOLS_REPORT), \
-      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/usb_descriptors.c:108:5: note: in expansion of macro 'SIDEWINDER_REPORT_DESC_FEATURE_POOL_REPORT'
-  108 |     SIDEWINDER_REPORT_DESC_FEATURE_POOL_REPORT          (HID_REPORT_ID(REPORT_ID_FEATURE_POOL_REPORT)),
-      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-<command-line>: error: 'HID_USAGE_PID_RAM_POOL_SIZE_REPORT' undeclared here (not in a function); did you mean 'HID_USAGE_PID_RAM_POOL_SIZE'?
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/target_sdk/lib/tinyusb/src/class/hid/hid.h:535:35: note: in definition of macro 'HID_REPORT_DATA_1'
-  535 | #define HID_REPORT_DATA_1(data) , data
-      |                                   ^~~~
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/target_sdk/lib/tinyusb/src/class/hid/hid.h:672:35: note: in expansion of macro 'HID_REPORT_ITEM'
-  672 | #define HID_USAGE(x)              HID_REPORT_ITEM(x, RI_LOCAL_USAGE, RI_TYPE_LOCAL, 1)
-      |                                   ^~~~~~~~~~~~~~~
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/usb_descriptors.h:699:9: note: in expansion of macro 'HID_USAGE'
-  699 |         HID_USAGE(HID_USAGE_PID_RAM_POOL_SIZE), \
-      |         ^~~~~~~~~
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/usb_descriptors.h:699:19: note: in expansion of macro 'HID_USAGE_PID_RAM_POOL_SIZE'
-  699 |         HID_USAGE(HID_USAGE_PID_RAM_POOL_SIZE), \
-      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/usb_descriptors.c:108:5: note: in expansion of macro 'SIDEWINDER_REPORT_DESC_FEATURE_POOL_REPORT'
-  108 |     SIDEWINDER_REPORT_DESC_FEATURE_POOL_REPORT          (HID_REPORT_ID(REPORT_ID_FEATURE_POOL_REPORT)),
-      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/usb_descriptors.h:709:19: error: 'HID_USAGE_PID_SIMULTANEOUS_EFFECTS_MAX' undeclared here (not in a function)
-  709 |         HID_USAGE(HID_USAGE_PID_SIMULTANEOUS_EFFECTS_MAX), \
-      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/target_sdk/lib/tinyusb/src/class/hid/hid.h:535:35: note: in definition of macro 'HID_REPORT_DATA_1'
-  535 | #define HID_REPORT_DATA_1(data) , data
-      |                                   ^~~~
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/target_sdk/lib/tinyusb/src/class/hid/hid.h:672:35: note: in expansion of macro 'HID_REPORT_ITEM'
-  672 | #define HID_USAGE(x)              HID_REPORT_ITEM(x, RI_LOCAL_USAGE, RI_TYPE_LOCAL, 1)
-      |                                   ^~~~~~~~~~~~~~~
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/usb_descriptors.h:709:9: note: in expansion of macro 'HID_USAGE'
-  709 |         HID_USAGE(HID_USAGE_PID_SIMULTANEOUS_EFFECTS_MAX), \
-      |         ^~~~~~~~~
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/usb_descriptors.c:108:5: note: in expansion of macro 'SIDEWINDER_REPORT_DESC_FEATURE_POOL_REPORT'
-  108 |     SIDEWINDER_REPORT_DESC_FEATURE_POOL_REPORT          (HID_REPORT_ID(REPORT_ID_FEATURE_POOL_REPORT)),
-      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/usb_descriptors.c: In function 'tud_descriptor_string_cb':
-/home/runner/work/picowinder_no_pullback/picowinder_no_pullback/usb_descriptors.c:190:25: warning: implicit declaration of function 'board_usb_get_serial' [-Wimplicit-function-declaration]
-  190 |             chr_count = board_usb_get_serial(_desc_str + 1, 32);
-      |                         ^~~~~~~~~~~~~~~~~~~~
-[62/93] Building ASM object CMakeFiles/picowinder.dir/target_sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
-[63/93] Building C object CMakeFiles/picowinder.dir/target_sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
-[64/93] Building C object CMakeFiles/picowinder.dir/target_sdk/src/rp2_common/pico_printf/printf.c.obj
-[65/93] Building C object CMakeFiles/picowinder.dir/target_sdk/src/rp2_common/pico_float/float_math.c.obj
-[66/93] Building C object CMakeFiles/picowinder.dir/target_sdk/src/rp2_common/pico_double/double_math.c.obj
-ninja: build stopped: subcommand failed.
-Error: Process completed with exit code 1.
+name: Build Firmware
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Compilers
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi cmake ninja-build
+
+      - name: Fetch Clean SDK Environment
+        run: |
+          DECODED_URL=$(echo "aHR0cHM6Ly9naXRodWIuY29tL3Jhc3BiZXJyeXBpL3BpY28tc2RrLmdpdA==" | base64 --decode)
+          git clone --depth 1 -b 1.5.1 "$DECODED_URL" target_sdk
+          cd target_sdk
+          git submodule update --init --recursive lib/tinyusb
+          echo "PICO_SDK_PATH=${{ github.workspace }}/target_sdk" >> $GITHUB_ENV
+
+      - name: Inject Global Naming Compatibility Patches
+        run: |
+          # Force global bypass flags right into the compiler template configurations
+          echo "set(DISABLE_PICOTOOL ON)" >> CMakeLists.txt
+          echo "set(PICO_NO_PICOTOOL ON)" >> CMakeLists.txt
+          
+          # Map all the modern TinyUSB layout naming tokens cleanly
+          echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_STATUS=HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_STATUS)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_PARAM_BLOCK_POOLS_REPORT=HID_USAGE_PID_PARAMETER_BLOCK_POOLS_REPORT)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_REPORT=HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_REPORT)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_POOL_ALIGNMENT=HID_USAGE_PID_PARAMETER_BLOCK_POOL_ALIGNMENT)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_MOVE_EFFECT_REPORT=HID_USAGE_PID_MOVE_EFFECT)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_DEVICE_CONTROL=HID_USAGE_PID_PID_DEVICE_CONTROL)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_FREE_REPORT=HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_FREE_REPORT)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_CREATE_NEW_EFFECT_PARAM_BLOCK_REPORT=HID_USAGE_PID_CREATE_NEW_EFFECT_PARAMETER_BLOCK_REPORT)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_OFFSET=0x7C)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_SET_CONSTANT_FORCE_REPORT=HID_USAGE_PID_SET_CONSTANTFORCE_REPORT)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_SET_RAMP_FORCE_REPORT=HID_USAGE_PID_SET_RAMPFORCE_REPORT)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_CENTER_POINT_OFFSET=HID_USAGE_PID_CENTERPOINT_OFFSET)" >> CMakeLists.txt
+          
+          # Hard hex number bypass for the layout targets that crashed earlier runs
+          echo "add_compile_definitions(HID_USAGE_PID_DEVICE_MANAGED_POOL=0xA9)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_SHARED_PARAMETER_BLOCKS=0xAA)" >> CMakeLists.txt
+          
+          # Map the remaining missing pool report token
+          echo "add_compile_definitions(HID_USAGE_PID_RAM_POOL_SIZE=HID_USAGE_PID_RAM_POOL_SIZE_REPORT)" >> CMakeLists.txt
+          
+          # Force the legacy macro definition to use quotes to shield the parentheses from the shell
+          echo 'add_compile_definitions("UART_FUNCSEL_NUM(u,p)=GPIO_FUNC_UART")' >> CMakeLists.txt
+
+      - name: Compile
+        run: |
+          mkdir build && cd build
+          cmake -G "Ninja" ..
+          ninja
+
+      - name: Upload Finished Firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: picowinder-clean
+          path: build/*.uf2
