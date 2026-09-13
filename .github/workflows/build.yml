@@ -44,9 +44,8 @@ jobs:
           echo "add_compile_definitions(HID_USAGE_PID_DEVICE_MANAGED_POOL=0xA9)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_SHARED_PARAMETER_BLOCKS=0xAA)" >> CMakeLists.txt
           
-          # Map the final two missing pool report tokens discovered in attempt 34
+          # Map the remaining missing pool report token
           echo "add_compile_definitions(HID_USAGE_PID_RAM_POOL_SIZE=HID_USAGE_PID_RAM_POOL_SIZE_REPORT)" >> CMakeLists.txt
-          echo "add_compile_definitions(HID_USAGE_PID_SIMULTANEOUS_EFFECTS_MAX=HID_USAGE_PID_SIMULTANEOUS_EFFECTS_MAX_REPORT)" >> CMakeLists.txt
           
           # Force the legacy macro definition to use quotes to shield the parentheses from the shell
           echo 'add_compile_definitions("UART_FUNCSEL_NUM(u,p)=GPIO_FUNC_UART")' >> CMakeLists.txt
