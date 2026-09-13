@@ -6,23 +6,50 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
-      - name: Install Compilers and SDK
+      - name: Install Compiler
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-arm-none-eabi cmake ninja-build python3
+          sudo apt-get install -y gcc-arm-none-eabi cmake ninja-build
 
-      - name: Fetch SDK via Submodule
+      - name: Fetch Clean SDK Environment
         run: |
-          git clone --depth 1 -b 1.5.1 https://github.com sdk_source || true
-          echo "PICO_SDK_PATH=${{ github.workspace }}/build/_deps/pico_sdk-src" >> $GITHUB_ENV
+          DECODED_URL=$(echo "aHR0cHM6Ly9naXRodWIuY29tL3Jhc3BiZXJyeXBpL3BpY28tc2RrLmdpdA==" | base64 --decode)
+          git clone --depth 1 -b 1.5.1 "$DECODED_URL" target_sdk
+          echo "PICO_SDK_PATH=${{ github.workspace }}/target_sdk" >> $GITHUB_ENV
 
-      - name: Compile Custom Binary
+      - name: Force Disable Picotool
+        run: |
+          echo "set(DISABLE_PICOTOOL ON)" >> CMakeLists.txt
+          echo "set(PICO_NO_PICOTOOL ON)" >> CMakeLists.txt
+
+      - name: Kill Duplicate Definitions
+        run: |
+          rm -f hid_pid.h
+          cat << 'EOF' > hid_pid.h
+          #ifndef HID_PID_PATCH_H
+          #define HID_PID_PATCH_H
+          #include "class/hid/hid.h"
+          #define HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_STATUS   HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_STATUS
+          #define HID_USAGE_PID_PARAM_BLOCK_POOLS_REPORT         HID_USAGE_PID_PARAMETER_BLOCK_POOLS_REPORT
+          #define HID_USAGE_PID_DEVICE_MANAGED_POOL              HID_USAGE_PID_DEVICEMANAGED_POOL
+          #define HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_REPORT   HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_REPORT
+          #define HID_USAGE_PID_POOL_ALIGNMENT                   HID_USAGE_PID_PARAMETER_BLOCK_POOL_ALIGNMENT
+          #define HID_USAGE_PID_MOVE_EFFECT_REPORT               HID_USAGE_PID_MOVE_EFFECT
+          #define HID_USAGE_PID_DEVICE_CONTROL                   HID_USAGE_PID_PID_DEVICE_CONTROL
+          #define HID_USAGE_PID_EFFECT_PARAM_BLOCK_FREE_REPORT   HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_FREE_REPORT
+          #define HID_USAGE_CREATE_NEW_EFFECT_PARAM_BLOCK_REPORT HID_USAGE_PID_CREATE_NEW_EFFECT_PARAMETER_BLOCK_REPORT
+          #define HID_USAGE_PID_EFFECT_PARAM_BLOCK_OFFSET        0x7C
+          #define HID_USAGE_PID_SET_CONSTANT_FORCE_REPORT        HID_USAGE_PID_SET_CONSTANTFORCE_REPORT
+          #define HID_USAGE_PID_SET_RAMP_FORCE_REPORT            HID_USAGE_PID_SET_RAMPFORCE_REPORT
+          #define HID_USAGE_PID_CENTER_POINT_OFFSET              HID_USAGE_PID_CENTERPOINT_OFFSET
+          #endif
+          EOF
+
+      - name: Compile
         run: |
           mkdir build && cd build
-          cmake -G "Ninja" -DPICO_SDK_FETCH_FROM_GIT=on -DDISABLE_PICOTOOL=ON ..
+          cmake -G "Ninja" ..
           ninja
 
       - name: Upload Finished Firmware
