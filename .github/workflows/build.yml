@@ -31,6 +31,8 @@ jobs:
           echo "#define HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_STATUS HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_STATUS" >> hid_pid.h
           echo "#define HID_USAGE_PID_PARAM_BLOCK_POOLS_REPORT HID_USAGE_PID_PARAMETER_BLOCK_POOLS_REPORT" >> hid_pid.h
           echo "#define HID_USAGE_PID_DEVICE_MANAGED_POOL HID_USAGE_PID_DEVICEMANAGED_POOL" >> hid_pid.h
+          echo "#define HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_REPORT HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_REPORT" >> hid_pid.h
+          echo "#define HID_USAGE_CREATE_NEW_EFFECT_PARAM_BLOCK_REPORT HID_USAGE_CREATE_NEW_EFFECT_PARAMETER_BLOCK_REPORT" >> hid_pid.h
           echo "#endif" >> hid_pid.h
 
       - name: Compile
@@ -38,6 +40,12 @@ jobs:
           mkdir build && cd build
           cmake -G "Ninja" -DPICO_SDK_FETCH_FROM_GIT=on ..
           ninja
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: picowinder-clean
+          path: build/*.uf2
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
