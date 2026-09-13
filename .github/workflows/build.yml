@@ -22,10 +22,16 @@ jobs:
           echo "set(DISABLE_PICOTOOL ON)" >> CMakeLists.txt
           echo "set(PICO_NO_PICOTOOL ON)" >> CMakeLists.txt
 
-      - name: Kill Duplicate Definitions
+      - name: Apply TinyUSB Naming Patch
         run: |
           rm -f hid_pid.h
-          touch hid_pid.h
+          echo "#ifndef HID_PID_PATCH_H" > hid_pid.h
+          echo "#define HID_PID_PATCH_H" >> hid_pid.h
+          echo "#include \"class/hid/hid.h\"" >> hid_pid.h
+          echo "#define HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_STATUS HID_USAGE_PID_EFFECT_PARAMETER_BLOCK_LOAD_STATUS" >> hid_pid.h
+          echo "#define HID_USAGE_PID_PARAM_BLOCK_POOLS_REPORT HID_USAGE_PID_PARAMETER_BLOCK_POOLS_REPORT" >> hid_pid.h
+          echo "#define HID_USAGE_PID_DEVICE_MANAGED_POOL HID_USAGE_PID_DEVICEMANAGED_POOL" >> hid_pid.h
+          echo "#endif" >> hid_pid.h
 
       - name: Compile
         run: |
