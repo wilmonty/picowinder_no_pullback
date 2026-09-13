@@ -40,6 +40,7 @@ jobs:
           echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_LOAD_STATUS=0x9C)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_DEVICE_GAIN=0x7F)" >> CMakeLists.txt
           echo "add_compile_definitions(HID_USAGE_PID_DEVICE_GAIN_REPORT=0x7E)" >> CMakeLists.txt
+          echo "add_compile_definitions(HID_USAGE_PID_DC_CONTINUE=0x9C)" >> CMakeLists.txt
           
           # Map remaining legacy descriptor terms directly to their hardware equivalents
           echo "add_compile_definitions(HID_USAGE_PID_EFFECT_PARAM_BLOCK_FREE_REPORT=0x9A)" >> CMakeLists.txt
